@@ -1,22 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao&display=swap');
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100%;
+  font-family: 'Liu Jian Mao Cao', cursive;
+  text-align: center;
+  background: #f9efe5 url(/images/background.jpg) right bottom no-repeat;
+  background-size: 40%;
 }
 
-.App-link {
-  color: #09d3ac;
+.App label{
+  margin: 100px 0 60px;
+  font-size: 84px;
+  font-weight: bold;
+  color: #4f8bbc;
+}
+
+.App .button {
+  background-color: #efb11b;
+  padding: 15px 20px;
+  border-radius: 50%;
+  font-size: 30px;
+  text-decoration: none;
+  color: #f9efe5;
+  font-weight: bold;
+}
+
+.App .button:hover, .App .button:focus {
+  background-color: #ec990e;
 }
