@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const createFileSelector = () => {
-    const fileSelector = document.createElement('input');
-    fileSelector.setAttribute('type', 'file');
-    fileSelector.setAttribute('multiple', 'multiple');
-    fileSelector.id = 'fileSelector';
-    return fileSelector;
-};
+// const createFileSelector = () => {
+//     const fileSelector = document.createElement('input');
+//     fileSelector.setAttribute('type', 'file');
+//     fileSelector.setAttribute('accept', '.pdf');
+//     fileSelector.id = 'fileSelector';
+//     return fileSelector;
+// };
 
 const FileDialog = () => {
-    const fileSelector = createFileSelector();
+    //const fileSelector = createFileSelector();
+    const [file, setFile] = useState('');
 
-    const onClick = () => {
-        fileSelector.click();
-        console.log(document.getElementById('fileSelector').files[0]);
+    const passFile = (e) => {
+        console.log(e.target.files[0]);
+        setFile(e.target.files[0]);
+    };
+
+    const sendFile = () => {
+        const data = new FormData();
+        data.append('file', file);
+        axios.post("http://localhost:8000/upload", data, {
+            // receive two    parameter endpoint url ,form data
+        }).then(res => { // then print response status
+                console.log(res.statusText)
+            })
     };
 
 
-    //
-    // useEffect(() => {
-    //    const fileSelector = createFileSelector();
-    // });
-
     return (
         <>
-            <label>Choose file to upload</label>
-            <a className="button" href="" onClick={() => onClick()}>Choose file</a>
+            <label htmlFor="file">Choose file to upload</label>
+            <input type="file" accept=".pdf" onChange={(e)=>passFile(e)}/>
+            <a className="button" href="" onClick={sendFile}>Submit</a>
         </>
     );
 };

@@ -31,3 +31,7 @@
 .App .button:hover, .App .button:focus {
   background-color: #ec990e;
 }
+
+#file {
+  display: none;
+}
