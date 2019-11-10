@@ -22,8 +22,7 @@ const FileDialog = () => {
         const data = new FormData();
         data.append('file', file);
         axios.post("http://localhost:8000/upload", data, {
-            // receive two    parameter endpoint url ,form data
-        }).then(res => { // then print response status
+        }).then(res => {
                 console.log(res.statusText)
             })
     };
@@ -31,8 +30,10 @@ const FileDialog = () => {
 
     return (
         <>
-            <label htmlFor="file">Choose file to upload</label>
-            <input type="file" accept=".pdf" onChange={(e)=>passFile(e)}/>
+            <label htmlFor="file">
+                Choose file to upload
+                <input type="file" accept=".pdf" onChange={(e)=>passFile(e)}/>
+            </label>
             <a className="button" href="" onClick={sendFile}>Submit</a>
         </>
     );
