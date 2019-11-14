@@ -23,7 +23,7 @@ const FileDialog = () => {
         data.append('file', file);
         axios.post("http://localhost:8000/upload", data, {
         }).then(res => {
-                console.log(res.statusText)
+                debugger;
             })
     };
 

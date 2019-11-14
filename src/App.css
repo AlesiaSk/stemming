@@ -26,10 +26,11 @@
   text-decoration: none;
   color: #f9efe5;
   font-weight: bold;
+  box-shadow: 0 6px 1px 1px #f89c00;
 }
 
 .App .button:hover, .App .button:focus {
-  background-color: #ec990e;
+  background-color: #e891009e;
 }
 
 #file {
