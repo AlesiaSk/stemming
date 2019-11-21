@@ -16,11 +16,10 @@ app.post('/upload', (req, res) => {
         } else if (err) {
             return res.status(500).json(err)
         }
+         // parsePDFFile();
         return res.status(200).send(req.file)
 
     });
-
-    parsePDFFile();
 
 });
 
@@ -43,7 +42,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single('file');
 
 const parsePDFFile = (fileName) => {
-    let dataBuffer = fs.readFileSync(path.resolve('files','1573739282782-La_France.pdf'));
+    let dataBuffer = fs.readFileSync(path.resolve('files', fileName));
     return (pdf(dataBuffer).then((data) =>
         (data.text.split(' '))
     ))

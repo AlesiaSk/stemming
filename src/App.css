@@ -12,27 +12,36 @@
 }
 
 .App label{
-  margin: 100px 0 60px;
-  font-size: 84px;
+  margin: 60px 0 60px;
+  font-size: 64px;
   font-weight: bold;
   color: #4f8bbc;
 }
 
 .App .button {
   background-color: #efb11b;
-  padding: 15px 20px;
+  padding: 25px 50px;
   border-radius: 50%;
-  font-size: 30px;
+  font-size: 45px;
   text-decoration: none;
   color: #f9efe5;
   font-weight: bold;
-  box-shadow: 0 6px 1px 1px #f89c00;
+  box-shadow: 0 10px 1px 1px #f89c00;
 }
 
 .App .button:hover, .App .button:focus {
   background-color: #e891009e;
+  box-shadow: 0 2px 1px 1px #f89c00;
+  margin-top: 6px;
 }
 
 #file {
   display: none;
+}
+
+svg {
+  width: 50%;
+  height: 50%;
+  fill: #4f8bbc;
+  cursor: pointer;
 }
