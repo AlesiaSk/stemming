@@ -10,36 +10,43 @@ const FileDialog = () => {
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+        console.log(e.target.files[0]);
         setLoaded(0);
         setMessage(e.target.files[0].name)
     };
 
     const handleUpload = () => {
+        console.log('HERE');
         if(isUpload){
+            console.log('isUpload');
             return;
         }
 
         if(!file) {
             setMessage('Select a file first');
+            console.log(message);
             return;
         }
-
         setIsUpload(true);
-        sendFile();
+        sendFile(file);
     };
-    const sendFile = () => {
+    const sendFile = (file) => {
+        console.log('Req', file);
         const data = new FormData();
         data.append('file', file);
         axios.post("http://localhost:8000/upload", data, {
-            onUploadProgress: ProgressEvent => {
-                setLoaded(Math.round(ProgressEvent.loaded/ProgressEvent.total)*100)
-            }
+            // onUploadProgress: ProgressEvent => {
+            //     setLoaded(Math.round(ProgressEvent.loaded/ProgressEvent.total)*100);
+            // }
+
         }).then(res => {
                 setFile(null);
                 setMessage('Uploaded successfully');
+                console.log(message);
                 setIsUpload(false);
             }).catch(err => {
                 setIsUpload(false);
+                console.log(message);
                 setMessage('Failed to upload');
         });
     };
