@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const pdf = require('pdf-parse');
+const snowball = require('node-snowball');
 
 app.use(cors());
 
@@ -27,7 +28,7 @@ app.post('/upload', (req, res) => {
         } else if (err) {
             return res.status(500).json(err)
         }
-        console.log(parsePDFFile(req.file.filename));
+        parsePDFFile(req.file.filename);
         return res.status(200).send(req.file)
 
     });
@@ -41,9 +42,9 @@ app.listen(8000, () => {
 const parsePDFFile = (fileName) => {
     let dataBuffer = fs.readFileSync(path.resolve('files', fileName));
     pdf(dataBuffer).then((data) => {
-        const text = data.text.split('');
+        const text = data.text.toLowerCase().split(/\.|,|\\n|\?|!|:|-|;|\)|\(|\s|[0-9]/g).filter((word) => word !== '');
 
-        if(data.text.includes('France')){
+        if(text.includes('France')){
             franceStemming(text);
         }
         else {
@@ -58,7 +59,20 @@ const italyStemming = (text) => {
 };
 
 const franceStemming = (text) => {
-    stopWordsDeleting(text, true);
+    console.log('snowball',snowball.stemword(stopWordsDeleting(text, true), 'french'));
+    const stemwords = snowball.stemword(stopWordsDeleting(text, true), 'french');
+};
+
+const countRepeatingWords = (wordsArray) => {
+
+    for  (let i = 0; i < wordsArray.length; i++){
+        let counter = 0;
+        for (let j = 0; j < wordsArray.length; j++) {
+            if (wordsArray[i] === wordsArray[j]) {
+                counter++;
+            }
+        }
+    }
 };
 
 const stopWordsDeleting = (words, french) => {
@@ -110,9 +124,13 @@ const stopWordsDeleting = (words, french) => {
         'ils',
         'la',
         'le',
+        'Le',
+        'Le',
         'les',
         'leur',
         'là',
+        'Là',
+        'La',
         'ma',
         'maintenant',
         'mais',
@@ -318,3 +336,5 @@ const stopWordsDeleting = (words, french) => {
     return french ? words.filter((word) => !franchStopwords.includes(word)) : words.filter((word) => !italianStopwords.includes(word));
 
 };
+
+
