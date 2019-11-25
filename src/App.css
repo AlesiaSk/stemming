@@ -46,3 +46,22 @@ svg {
   fill: #4f8bbc;
   cursor: pointer;
 }
+
+
+.invisible {
+  display: none;
+}
+
+.help {
+  position: absolute;
+  background-color: #4f8bbc;
+  color: black;
+  font-weight: bold;
+}
+
+.help_button {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  font-size: 30px;
+}

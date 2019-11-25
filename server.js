@@ -61,6 +61,7 @@ const italyStemming = (text) => {
 
 const franceStemming = (text) => {
     const stemwords = snowball.stemword(stopWordsDeleting(text, true), 'french');
+    console.log('length', countRepeatingWords(stemwords).length);
     writeToFile(countRepeatingWords(stemwords).join(', '));
 };
 
