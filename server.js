@@ -55,7 +55,8 @@ const parsePDFFile = (fileName) => {
 
 
 const italyStemming = (text) => {
-    stopWordsDeleting(text);
+    const stemwords = snowball.stemword(stopWordsDeleting(text, true), 'italian');
+    writeToFile(countRepeatingWords(stemwords).join(', '));
 };
 
 const franceStemming = (text) => {
@@ -67,8 +68,6 @@ const countRepeatingWords = (wordsArray) => {
 
     const resultArray = [];
     let counter;
-
-    console.log('wordsArray', wordsArray);
 
     for  (let i = 0; i < wordsArray.length; i++){
         counter = 1;
@@ -89,7 +88,7 @@ const countRepeatingWords = (wordsArray) => {
 };
 
 const writeToFile = (text) => {
-    fs.writeFile(`${Date.now()}-stemming.txt`, text, (err) => {
+    fs.writeFile(`stemming-result/${Date.now()}-stemming.txt`, text, (err) => {
         if (err) throw err;
         console.log('Stemming ended!');
     });
