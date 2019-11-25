@@ -44,7 +44,7 @@ const parsePDFFile = (fileName) => {
     pdf(dataBuffer).then((data) => {
         const text = data.text.toLowerCase().split(/\.|,|\\n|\?|!|:|-|;|\)|\(|\s|[0-9]/g).filter((word) => word !== '');
 
-        if(text.includes('France')){
+        if(text.includes('france')){
             franceStemming(text);
         }
         else {
@@ -59,20 +59,40 @@ const italyStemming = (text) => {
 };
 
 const franceStemming = (text) => {
-    console.log('snowball',snowball.stemword(stopWordsDeleting(text, true), 'french'));
     const stemwords = snowball.stemword(stopWordsDeleting(text, true), 'french');
+    writeToFile(countRepeatingWords(stemwords).join(', '));
 };
 
 const countRepeatingWords = (wordsArray) => {
 
+    const resultArray = [];
+    let counter;
+
+    console.log('wordsArray', wordsArray);
+
     for  (let i = 0; i < wordsArray.length; i++){
-        let counter = 0;
+        counter = 1;
         for (let j = 0; j < wordsArray.length; j++) {
             if (wordsArray[i] === wordsArray[j]) {
                 counter++;
             }
         }
+
+        if (counter > 1){
+            resultArray.push(`${wordsArray[i]} - ${counter}`);
+        }
+        else {
+            resultArray.push(wordsArray[i]);
+        }
     }
+    return [...new Set(resultArray)];
+};
+
+const writeToFile = (text) => {
+    fs.writeFile(`${Date.now()}-stemming.txt`, text, (err) => {
+        if (err) throw err;
+        console.log('Stemming ended!');
+    });
 };
 
 const stopWordsDeleting = (words, french) => {
